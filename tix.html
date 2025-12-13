@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tix</title>
+
+
+
+    <style>
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    
+    width: 100vw;
+height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+#box{
+    width: 27rem;
+    height: 27rem;
+    display: flex;
+    flex-wrap: wrap;
+
+
+}
+#box section{
+    width: 8.8rem;
+    height: 9rem;
+    display: flex;
+     align-items: center;
+    justify-content: center;
+    border: 0.2rem rgb(61, 50, 183) solid;
+    cursor: pointer;
+    font-size: 10rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(67, 62, 198);
+
+}
+#box section:nth-child(1),#box section:nth-child(2),#box section:nth-child(3){
+
+    border-top-width: 0;
+}
+#box section:nth-child(1),#box section:nth-child(4),#box section:nth-child(7){
+    border-left-width: 0;
+}
+#box section:nth-child(3),#box section:nth-child(6),#box section:nth-child(9){
+    border-right-width: 0;
+}
+#box section:nth-child(7),#box section:nth-child(8),#box section:nth-child(9){
+border-bottom-width: 0;
+}
+
+
+
+    </style>
+</head>
+<body>
+    <div id="box">
+
+        <section onclick="handleCellClick(1,1)"></section>
+        <section onclick="handleCellClick(2,1)"></section>
+        <section onclick="handleCellClick(3,1)"></section>
+        <section onclick="handleCellClick(4,1)"></section>
+        <section onclick="handleCellClick(5,1)"></section>
+        <section onclick="handleCellClick(6,1)"></section>
+        <section onclick="handleCellClick(7,1)"></section>
+        <section onclick="handleCellClick(8,1)"></section>
+        <section onclick="handleCellClick(9,1)"></section>
+    </div>
+
+
+    <script>
+
+let grid_arr = ["","","","","","","","",""];
+let con_arr = [
+     [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6] ];
+
+  let sts_game=false;
+let xbox = document.getElementById("box");
+const handleCellClick = (x, who) => {
+      if(sts_game){
+        grid_arr = Array(9).fill("");
+    tmp_sts=0;
+    display(1);
+    alert("Game Restarted");
+    sts_game=false;
+    }
+
+if(get_sts()==0){
+        if(grid_arr[x-1]===""){
+         
+        grid_arr[x-1]=who;
+         
+    display(1);
+  if (get_sts()==1) return;
+ tix();
+      display(0);
+  if (get_sts()==1) return;
+  
+    
+    }
+}
+}
+
+const display=(x)=>{
+   if(x==0){setTimeout(()=>{
+     xbox.innerHTML=`  
+        <section onclick="handleCellClick(1,1)">${get_sty(grid_arr[0])}</section>
+        <section onclick="handleCellClick(2,1)">${get_sty(grid_arr[1])}</section>
+        <section onclick="handleCellClick(3,1)">${get_sty(grid_arr[2])}</section>
+        <section onclick="handleCellClick(4,1)">${get_sty(grid_arr[3])}</section>
+        <section onclick="handleCellClick(5,1)">${get_sty(grid_arr[4])}</section>
+        <section onclick="handleCellClick(6,1)">${get_sty(grid_arr[5])}</section>
+        <section onclick="handleCellClick(7,1)">${get_sty(grid_arr[6])}</section>
+        <section onclick="handleCellClick(8,1)">${get_sty(grid_arr[7])}</section>
+        <section onclick="handleCellClick(9,1)">${get_sty(grid_arr[8])}</section>  `   ;
+   },500);}else{
+     xbox.innerHTML=`  
+        <section onclick="handleCellClick(1,1)">${get_sty(grid_arr[0])}</section>
+        <section onclick="handleCellClick(2,1)">${get_sty(grid_arr[1])}</section>
+        <section onclick="handleCellClick(3,1)">${get_sty(grid_arr[2])}</section>
+        <section onclick="handleCellClick(4,1)">${get_sty(grid_arr[3])}</section>
+        <section onclick="handleCellClick(5,1)">${get_sty(grid_arr[4])}</section>
+        <section onclick="handleCellClick(6,1)">${get_sty(grid_arr[5])}</section>
+        <section onclick="handleCellClick(7,1)">${get_sty(grid_arr[6])}</section>
+        <section onclick="handleCellClick(8,1)">${get_sty(grid_arr[7])}</section>
+        <section onclick="handleCellClick(9,1)">${get_sty(grid_arr[8])}</section>  `   ;
+   }
+}
+
+const check_sts=()=>{
+
+for (let i = 0; i < con_arr.length; i++) {
+    const [a, b, c] = con_arr[i];
+    if (grid_arr[a] === 0 && grid_arr[b] === 0 && grid_arr[c] === 0) {
+       
+        return 0; // O wins
+    }
+    if (grid_arr[a] === 1 && grid_arr[b] === 1 && grid_arr[c] === 1) {
+      
+        return 1; // X wins
+    }
+}
+
+sts_game=false;
+return -1; // No winner yet
+
+}
+
+const get_sty=(x)=>{
+    return (x===1?"x":x===0?"o":"");
+}
+
+const tix_prob=(grid)=>{
+
+
+
+   
+    const dem_grid = [...grid_arr];
+    for(let j=0; j<grid.length; j++){
+
+   
+    for (let i = 0; i < con_arr.length; i++) {          
+    const [a, b, c] = con_arr[i];
+
+    //is tix could be win
+        dem_grid[grid[j]] = 0;
+       if (dem_grid[a] === 0 && dem_grid[b] === 0 && dem_grid[c] === 0) {
+       //console.log("suc",grid[j],grid,j,dem_grid,grid);
+        return [0,grid[j]]; // O wins
+    }
+        dem_grid[grid[j]] = "";
+
+    }
+
+    }
+
+   for(let j=0; j<grid.length; j++){
+   for (let i = 0; i < con_arr.length; i++) {          
+    const [a, b, c] = con_arr[i];
+    //is player could be win for defence
+        dem_grid[grid[j]] = 1;
+       if (dem_grid[a] === 1 && dem_grid[b] === 1 && dem_grid[c] === 1) {
+       //console.log("def",grid[j],grid,j,dem_grid,grid);
+
+        return [1,grid[j]]; // X wins
+    }
+        dem_grid[grid[j]] = "";
+
+    }   
+}
+
+
+
+
+return [-1,0];
+
+}
+
+
+
+const tix=()=>{
+    //the smart openent
+    let empty_indices = [];
+
+    for(let i=0; i<grid_arr.length; i++){
+        if(grid_arr[i] === ""){
+            empty_indices.push(i);
+        }
+    }
+
+// console.log(empty_indices);
+if(empty_indices.length==0) return;
+ const [prob,x] = tix_prob(empty_indices);
+    if(prob==-1){
+        const len = empty_indices.length;
+        const choose = empty_indices[Math.floor(Math.random(0)*len)];
+        grid_arr[choose] = 0;
+        //console.log("tix1 : ",choose)
+
+    }else{
+        grid_arr[x] = 0;
+      //  console.log("tix2 : ",x);
+    }
+
+}
+let tmp_sts = 0;
+const get_sts=()=>{
+    if(tmp_sts==1) return;
+    if(check_sts()==0){
+        console.log("o win");
+         sts_game=true;
+        tmp_sts=1;
+return tmp_sts;
+    }else if(check_sts()==1){
+        console.log("x win");
+         sts_game=true;
+        tmp_sts=1;
+return tmp_sts;
+    }
+       let empty_indices = [];
+
+    for(let i=0; i<grid_arr.length; i++){
+        if(grid_arr[i] === ""){
+            empty_indices.push(i);
+        }
+    }
+    if(empty_indices==0){
+        console.log("draw")
+        tmp_sts=1;
+        sts_game=true;
+       return tmp_sts; 
+    }
+    return tmp_sts;
+}
+
+
+
+    </script>
+</body>
+</html>
