@@ -18,8 +18,11 @@ body{
     width: 100vw;
 height: 100vh;
     display: flex;
+    
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
+        flex-direction: column;
+
     
 }
 #box{
@@ -27,6 +30,7 @@ height: 100vh;
     height: 27rem;
     display: flex;
     flex-wrap: wrap;
+    margin-top:-5rem ;
 
 
 }
@@ -42,6 +46,23 @@ height: 100vh;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: rgb(67, 62, 198);
 
+}
+.txt{
+    color: rgb(61, 50, 183);
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    text-transform: lowercase;
+    text-align: center;
+}
+.txt:nth-child(1){
+    font-size: 8rem;
+    margin-top: -3rem;
+    font-family: monospace;
+    text-transform: uppercase;
+    
+}
+.txt:nth-child(1) span{
+    text-transform: lowercase;
+    opacity: 0.5;
 }
 #box section:nth-child(1),#box section:nth-child(2),#box section:nth-child(3){
 
@@ -62,6 +83,10 @@ border-bottom-width: 0;
     </style>
 </head>
 <body>
+   
+    <div>
+     <h1 class="txt"><span>x|</span> TIX <span>|o</span></h1>   <p class="txt"> status : <span id="status_up" >not yet started</span></p></div>
+    </div>
     <div id="box">
 
         <section onclick="handleCellClick(1,1)"></section>
@@ -77,6 +102,7 @@ border-bottom-width: 0;
 
 
     <script>
+const status_up = document.getElementById("status_up");
 
 let grid_arr = ["","","","","","","","",""];
 let con_arr = [
@@ -96,7 +122,7 @@ const handleCellClick = (x, who) => {
         grid_arr = Array(9).fill("");
     tmp_sts=0;
     display(1);
-    console.log("Game Restarted");
+    set_status_up("Game Restarted");
     sts_game=false;
     }
 
@@ -117,6 +143,7 @@ if(get_sts()==0){
 }
 
 const display=(x)=>{
+    
    if(x==0){setTimeout(()=>{
      xbox.innerHTML=`  
         <section onclick="handleCellClick(1,1)">${get_sty(grid_arr[0])}</section>
@@ -128,6 +155,7 @@ const display=(x)=>{
         <section onclick="handleCellClick(7,1)">${get_sty(grid_arr[6])}</section>
         <section onclick="handleCellClick(8,1)">${get_sty(grid_arr[7])}</section>
         <section onclick="handleCellClick(9,1)">${get_sty(grid_arr[8])}</section>  `   ;
+        set_status_up((x==1?"tix turn":"your turn"));
    },500);}else{
      xbox.innerHTML=`  
         <section onclick="handleCellClick(1,1)">${get_sty(grid_arr[0])}</section>
@@ -139,6 +167,7 @@ const display=(x)=>{
         <section onclick="handleCellClick(7,1)">${get_sty(grid_arr[6])}</section>
         <section onclick="handleCellClick(8,1)">${get_sty(grid_arr[7])}</section>
         <section onclick="handleCellClick(9,1)">${get_sty(grid_arr[8])}</section>  `   ;
+        set_status_up((x==1?"tix turn":"your turn"));
    }
 }
 
@@ -180,7 +209,7 @@ const tix_prob=(grid)=>{
     //is tix could be win
         dem_grid[grid[j]] = 0;
        if (dem_grid[a] === 0 && dem_grid[b] === 0 && dem_grid[c] === 0) {
-       //alert("suc",grid[j],grid,j,dem_grid,grid);
+       //set_status_up("suc",grid[j],grid,j,dem_grid,grid);
         return [0,grid[j]]; // O wins
     }
         dem_grid[grid[j]] = "";
@@ -195,7 +224,7 @@ const tix_prob=(grid)=>{
     //is player could be win for defence
         dem_grid[grid[j]] = 1;
        if (dem_grid[a] === 1 && dem_grid[b] === 1 && dem_grid[c] === 1) {
-       //alert("def",grid[j],grid,j,dem_grid,grid);
+       //set_status_up("def",grid[j],grid,j,dem_grid,grid);
 
         return [1,grid[j]]; // X wins
     }
@@ -223,18 +252,18 @@ const tix=()=>{
         }
     }
 
-// alert(empty_indices);
+// set_status_up(empty_indices);
 if(empty_indices.length==0) return;
  const [prob,x] = tix_prob(empty_indices);
     if(prob==-1){
         const len = empty_indices.length;
         const choose = empty_indices[Math.floor(Math.random(0)*len)];
         grid_arr[choose] = 0;
-        //alert("tix1 : ",choose)
+        //set_status_up("tix1 : ",choose)
 
     }else{
         grid_arr[x] = 0;
-      //  alert("tix2 : ",x);
+      //  set_status_up("tix2 : ",x);
     }
 
 }
@@ -242,12 +271,12 @@ let tmp_sts = 0;
 const get_sts=()=>{
     if(tmp_sts==1) return;
     if(check_sts()==0){
-        alert("o win");
+        set_status_up("o win");
          sts_game=true;
         tmp_sts=1;
 return tmp_sts;
     }else if(check_sts()==1){
-        alert("x win");
+        set_status_up("x win");
          sts_game=true;
         tmp_sts=1;
 return tmp_sts;
@@ -260,7 +289,7 @@ return tmp_sts;
         }
     }
     if(empty_indices==0){
-        alert("draw")
+        set_status_up("draw")
         tmp_sts=1;
         sts_game=true;
        return tmp_sts; 
@@ -268,7 +297,9 @@ return tmp_sts;
     return tmp_sts;
 }
 
-
+function set_status_up(txt){
+    status_up.innerText=txt.trim();
+}
 
     </script>
 </body>
