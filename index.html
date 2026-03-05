@@ -96,7 +96,7 @@ const handleCellClick = (x, who) => {
         grid_arr = Array(9).fill("");
     tmp_sts=0;
     display(1);
-    alert("Game Restarted");
+    console.log("Game Restarted");
     sts_game=false;
     }
 
@@ -180,7 +180,7 @@ const tix_prob=(grid)=>{
     //is tix could be win
         dem_grid[grid[j]] = 0;
        if (dem_grid[a] === 0 && dem_grid[b] === 0 && dem_grid[c] === 0) {
-       //console.log("suc",grid[j],grid,j,dem_grid,grid);
+       //alert("suc",grid[j],grid,j,dem_grid,grid);
         return [0,grid[j]]; // O wins
     }
         dem_grid[grid[j]] = "";
@@ -195,7 +195,7 @@ const tix_prob=(grid)=>{
     //is player could be win for defence
         dem_grid[grid[j]] = 1;
        if (dem_grid[a] === 1 && dem_grid[b] === 1 && dem_grid[c] === 1) {
-       //console.log("def",grid[j],grid,j,dem_grid,grid);
+       //alert("def",grid[j],grid,j,dem_grid,grid);
 
         return [1,grid[j]]; // X wins
     }
@@ -223,18 +223,18 @@ const tix=()=>{
         }
     }
 
-// console.log(empty_indices);
+// alert(empty_indices);
 if(empty_indices.length==0) return;
  const [prob,x] = tix_prob(empty_indices);
     if(prob==-1){
         const len = empty_indices.length;
         const choose = empty_indices[Math.floor(Math.random(0)*len)];
         grid_arr[choose] = 0;
-        //console.log("tix1 : ",choose)
+        //alert("tix1 : ",choose)
 
     }else{
         grid_arr[x] = 0;
-      //  console.log("tix2 : ",x);
+      //  alert("tix2 : ",x);
     }
 
 }
@@ -242,12 +242,12 @@ let tmp_sts = 0;
 const get_sts=()=>{
     if(tmp_sts==1) return;
     if(check_sts()==0){
-        console.log("o win");
+        alert("o win");
          sts_game=true;
         tmp_sts=1;
 return tmp_sts;
     }else if(check_sts()==1){
-        console.log("x win");
+        alert("x win");
          sts_game=true;
         tmp_sts=1;
 return tmp_sts;
@@ -260,7 +260,7 @@ return tmp_sts;
         }
     }
     if(empty_indices==0){
-        console.log("draw")
+        alert("draw")
         tmp_sts=1;
         sts_game=true;
        return tmp_sts; 
