@@ -85,7 +85,7 @@ border-bottom-width: 0;
 <body>
    
     <div>
-     <h1 class="txt"><span>x|</span> TIX <span>|o</span></h1>   <p class="txt"> status : <span id="status_up" >not yet started</span></p></div>
+     <h1 class="txt"><span>x|</span> TIX <span>|o</span></h1>   <p class="txt"> turn : <span id="status_up" >not yet started</span> <span style="color: blue;font-size: 2rem;">|</span><span>status : </span><span id="status_down">not yet </span></p></div>
     </div>
     <div id="box">
 
@@ -103,7 +103,7 @@ border-bottom-width: 0;
 
     <script>
 const status_up = document.getElementById("status_up");
-
+const status_down = document.getElementById("status_down");
 let grid_arr = ["","","","","","","","",""];
 let con_arr = [
      [0, 1, 2],
@@ -117,12 +117,13 @@ let con_arr = [
 
   let sts_game=false;
 let xbox = document.getElementById("box");
+
 const handleCellClick = (x, who) => {
       if(sts_game){
         grid_arr = Array(9).fill("");
     tmp_sts=0;
     display(1);
-    set_status_up("Game Restarted");
+    set_status_down("game restarted");
     sts_game=false;
     }
 
@@ -271,12 +272,12 @@ let tmp_sts = 0;
 const get_sts=()=>{
     if(tmp_sts==1) return;
     if(check_sts()==0){
-        set_status_up("o win");
+        set_status_down("o win");
          sts_game=true;
         tmp_sts=1;
 return tmp_sts;
     }else if(check_sts()==1){
-        set_status_up("x win");
+        set_status_down("x win");
          sts_game=true;
         tmp_sts=1;
 return tmp_sts;
@@ -289,7 +290,7 @@ return tmp_sts;
         }
     }
     if(empty_indices==0){
-        set_status_up("draw")
+        set_status_down("draw")
         tmp_sts=1;
         sts_game=true;
        return tmp_sts; 
@@ -299,6 +300,9 @@ return tmp_sts;
 
 function set_status_up(txt){
     status_up.innerText=txt.trim();
+}
+function set_status_down(txt){
+    status_down.innerText=txt.trim();
 }
 
     </script>
