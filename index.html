@@ -77,7 +77,14 @@ height: 100vh;
 #box section:nth-child(7),#box section:nth-child(8),#box section:nth-child(9){
 border-bottom-width: 0;
 }
+.scr{
+    font-size: 1rem;
+    color: rgb(61, 50, 183);
+    opacity: 0.5;
+    position: absolute;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
+}
 
 
     </style>
@@ -85,7 +92,9 @@ border-bottom-width: 0;
 <body>
    
     <div>
-     <h1 class="txt"><span>x|</span> TIX <span>|o</span></h1>   <p class="txt"> turn : <span id="status_up" >not yet started</span> <span style="color: blue;font-size: 2rem;">|</span><span>status : </span><span id="status_down">not yet </span></p></div>
+     <h1 class="txt"><span>x|<span class="scr" id="score_x">0</span></span> TIX <span>  <span class="scr" id="score_o">0</span>|o</span></h1>   <p class="txt"> turn : <span id="status_up" >not yet started</span> <span style="color: blue;font-size: 2rem;">|</span><span>status : </span><span id="status_down">not yet </span></p></div>
+     
+   
     </div>
     <div id="box">
 
@@ -104,6 +113,8 @@ border-bottom-width: 0;
     <script>
 const status_up = document.getElementById("status_up");
 const status_down = document.getElementById("status_down");
+const score_x = document.getElementById("score_x");
+const score_o = document.getElementById("score_o");
 let grid_arr = ["","","","","","","","",""];
 let con_arr = [
      [0, 1, 2],
@@ -114,6 +125,8 @@ let con_arr = [
   [2, 5, 8],
   [0, 4, 8],
   [2, 4, 6] ];
+
+  let score = [0,0];
 
   let sts_game=false;
 let xbox = document.getElementById("box");
@@ -172,16 +185,23 @@ const display=(x)=>{
    }
 }
 
+const update_score=()=>{
+    score_x.innerText=`${score[0]}`;
+    score_o.innerText=`${score[1]}`;
+}
 const check_sts=()=>{
 
 for (let i = 0; i < con_arr.length; i++) {
     const [a, b, c] = con_arr[i];
     if (grid_arr[a] === 0 && grid_arr[b] === 0 && grid_arr[c] === 0) {
-       
+         score[1]+=1;
+         update_score();
         return 0; // O wins
     }
     if (grid_arr[a] === 1 && grid_arr[b] === 1 && grid_arr[c] === 1) {
       
+        score[0]+=1;
+        update_score();
         return 1; // X wins
     }
 }
