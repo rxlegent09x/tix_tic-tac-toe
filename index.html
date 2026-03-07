@@ -185,23 +185,27 @@ const display=(x)=>{
    }
 }
 
-const update_score=()=>{
-    score_x.innerText=`${score[0]}`;
-    score_o.innerText=`${score[1]}`;
+const update_score=(x_t)=>{
+      if(x_t==1){
+        score[1]=score[1]+1;
+      }else{
+        score[0]= score[0]+1;
+      }
+    score_x.innerText=`${score[1]}`;
+    score_o.innerText=`${score[0]}`;
 }
 const check_sts=()=>{
+
 
 for (let i = 0; i < con_arr.length; i++) {
     const [a, b, c] = con_arr[i];
     if (grid_arr[a] === 0 && grid_arr[b] === 0 && grid_arr[c] === 0) {
-         score[1]+=1;
-         update_score();
+       
         return 0; // O wins
     }
     if (grid_arr[a] === 1 && grid_arr[b] === 1 && grid_arr[c] === 1) {
       
-        score[0]+=1;
-        update_score();
+       
         return 1; // X wins
     }
 }
@@ -295,11 +299,13 @@ const get_sts=()=>{
         set_status_down("o win");
          sts_game=true;
         tmp_sts=1;
+        update_score(0); //o win
 return tmp_sts;
     }else if(check_sts()==1){
         set_status_down("x win");
          sts_game=true;
         tmp_sts=1;
+        update_score(1);//x win
 return tmp_sts;
     }
        let empty_indices = [];
