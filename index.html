@@ -63,6 +63,8 @@ height: 100vh;
 .txt:nth-child(1) span{
     text-transform: lowercase;
     opacity: 0.5;
+    margin-top: -1rem;
+    
 }
 #box section:nth-child(1),#box section:nth-child(2),#box section:nth-child(3){
 
@@ -86,13 +88,90 @@ border-bottom-width: 0;
 
 }
 
+/*@media (min-width: 600px) phones*/
+@media screen and (max-width: 600px) {
+  #box{
+    width: 19rem;
+    height: 19rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
+
+}
+#box section{
+    width: 5.1rem;
+    height: 6.5rem;
+    display: flex;
+     align-items: center;
+    justify-content: center;
+    border: 0.1rem rgb(61, 50, 183) solid;
+    cursor: pointer;
+    font-size: 5rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(67, 62, 198);
+
+}
+.txt{
+    color: rgb(61, 50, 183);
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    text-transform: lowercase;
+    text-align: center;
+    font-size: 0.85rem;
+    
+}
+.txt:nth-child(1){
+    font-family: monospace;
+    text-transform: uppercase;
+    font-size: 3.5rem;
+    
+}
+.txt:nth-child(1) span{
+    text-transform: lowercase;
+    opacity: 0.5;
+}
+#box section:nth-child(1),#box section:nth-child(2),#box section:nth-child(3){
+
+    border-top-width: 0;
+}
+#box section:nth-child(1),#box section:nth-child(4),#box section:nth-child(7){
+    border-left-width: 0;
+}
+#box section:nth-child(3),#box section:nth-child(6),#box section:nth-child(9){
+    border-right-width: 0;
+}
+#box section:nth-child(7),#box section:nth-child(8),#box section:nth-child(9){
+border-bottom-width: 0;
+}
+.scr{
+    font-size: 0.85rem;
+    color: rgb(61, 50, 183);
+    opacity: 0.5;
+    position: absolute;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+
+}
+    
+
+}
+
+#score_o{
+    margin-left: -0.5rem;
+
+}
+
+
+
+
 
     </style>
 </head>
 <body>
    
     <div>
-     <h1 class="txt"><span>x|<span class="scr" id="score_x">0</span></span> TIX <span>  <span class="scr" id="score_o">0</span>|o</span></h1>   <p class="txt"> turn : <span id="status_up" >not yet started</span> <span style="color: blue;font-size: 2rem;">|</span><span>status : </span><span id="status_down">not yet </span></p></div>
+     <h1 class="txt"><span>x|<span class="scr" id="score_x">0</span></span>TIX<span><span class="scr" id="score_o">0</span>|o</span></h1>   <p class="txt">turn : <span id="status_up" >not yet started</span> <span style="color: blue;font-size: 2rem;">|</span><span>status : </span><span id="status_down">not yet </span></p></div>
      
    
     </div>
